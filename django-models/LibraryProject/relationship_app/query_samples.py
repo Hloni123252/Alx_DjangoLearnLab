@@ -1,4 +1,4 @@
-from django.core.management.base import BaseCommand  # Ensure this import is present
+from django.core.management.base import BaseCommand
 from relationship_app.models import Author, Book, Library, Librarian
 
 class Command(BaseCommand):
@@ -23,13 +23,13 @@ class Command(BaseCommand):
             print(f"- {book.title}")
 
         # List all books in a library
-        print("\nBooks in City Library:")
-        library_instance = Library.objects.get(name=library_name)
-        books_in_library = library_instance.books.all()
+        print("\nBooks in a library:")
+        specific_library = Library.objects.get(name=library_name)  # Explicit variable
+        books_in_library = specific_library.books.all()
         for book in books_in_library:
             print(f"- {book.title}")
 
         # Retrieve the librarian for a library
-        print("\nLibrarian for City Library:")
-        librarian = Librarian.objects.get(library__name=library_name)
-        print(f"- {librarian.name}")
+        print("\nLibrarian for the library:")
+        specific_librarian = Librarian.objects.get(library__name=library_name)
+        print(f"- {specific_librarian.name}")
