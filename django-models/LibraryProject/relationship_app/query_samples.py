@@ -1,27 +1,35 @@
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand  # Ensure this import is present
 from relationship_app.models import Author, Book, Library, Librarian
 
 class Command(BaseCommand):
     help = 'Sample queries for relationship_app models'
 
     def handle(self, *args, **kwargs):
-        author = Author.objects.create(name="George Orwell")
+        # Create sample data
+        author_name = "George Orwell"
+        author = Author.objects.create(name=author_name)
         book1 = Book.objects.create(title="1984", author=author)
         book2 = Book.objects.create(title="Animal Farm", author=author)
-        library = Library.objects.create(name="City Library")
+        library_name = "City Library"
+        library = Library.objects.create(name=library_name)
         library.books.add(book1, book2)
-        librarian = Librarian.objects.create(name="Jane Doe", library=library)
+        librarian_name = "Jane Doe"
+        librarian = Librarian.objects.create(name=librarian_name, library=library)
 
+        # Query all books by a specific author
         print("Books by George Orwell:")
-        books_by_author = Book.objects.filter(author__name="George Orwell")
+        books_by_author = Book.objects.filter(author__name=author_name)
         for book in books_by_author:
             print(f"- {book.title}")
 
+        # List all books in a library
         print("\nBooks in City Library:")
-        books_in_library = Library.objects.get(name="City Library").books.all()
+        library_instance = Library.objects.get(name=library_name)
+        books_in_library = library_instance.books.all()
         for book in books_in_library:
             print(f"- {book.title}")
 
+        # Retrieve the librarian for a library
         print("\nLibrarian for City Library:")
-        librarian = Librarian.objects.get(library__name="City Library")
+        librarian = Librarian.objects.get(library__name=library_name)
         print(f"- {librarian.name}")
