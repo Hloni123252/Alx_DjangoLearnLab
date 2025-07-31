@@ -1,21 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Library Detail</title>
+    <title>{{ library.name }}</title>
 </head>
 <body>
-    <h1>{{ library.name }}</h1>
-    <p>Location: {{ library.location }}</p>
-
-    <h2>Books in this Library:</h2>
+    <h1>Library: {{ library.name }}</h1>
+    <h2>Books in this library:</h2>
     <ul>
         {% for book in library.book_set.all %}
-            <li>{{ book.title }} by {{ book.author }}</li>
+        <li>{{ book.title }} by {{ book.author.name }}</li>
         {% empty %}
-            <li>No books available.</li>
+        <li>No books available.</li>
         {% endfor %}
     </ul>
-
-    <a href="/">Back to Library List</a>
 </body>
 </html>
