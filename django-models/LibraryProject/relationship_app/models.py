@@ -16,7 +16,7 @@ class Author(models.Model):
 class Book(models.Model):
     title = models.CharField(max_length=200)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
-    publication_year = models.IntegerField()  # Non-nullable, default set during migration
+    publication_year = models.IntegerField()
     library = models.OneToOneField('Library', on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
