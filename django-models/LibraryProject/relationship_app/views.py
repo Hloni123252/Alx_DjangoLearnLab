@@ -1,15 +1,12 @@
-from django.http import HttpResponse
-from .models import Book
+from django.shortcuts import render
+from django.views.generic import DetailView
+from .models import Book, Library
 
 def book_list(request):
     books = Book.objects.all()
-    text = '\n'.join(f"{book.title} by {book.author.name}" for book in books)
-    return HttpResponse(text)
-
-from django.views.generic import DetailView
-from .models import Library
+    return render(request, 'list_books.html', {'books': books}) 
 
 class LibraryDetailView(DetailView):
     model = Library
-    template_name = 'library_detail.html'  # Optional template is fine here
+    template_name = 'library_detail.html'  
     context_object_name = 'library'
